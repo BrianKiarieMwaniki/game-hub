@@ -1,7 +1,8 @@
 import { it, expect, describe } from 'vitest';
 
 describe('group', () => {
-    it('should', () => {
+    it('should', async() => {
+        
         expect(1).toBeTruthy();
     })
 })

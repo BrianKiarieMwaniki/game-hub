@@ -5,8 +5,8 @@ export interface FetchGamesResponse{
 
 export interface Game {
   id: number;
-//   slug: string;
   name: string;
+//   slug: string;
 //   released: Date;
 //   tba: boolean;
 //   background_image: string;
