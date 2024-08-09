@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import ResizeObserver from 'resize-observer-polyfill'
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
