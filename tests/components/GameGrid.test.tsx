@@ -1,4 +1,4 @@
-import { findByText, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import GameGrid from "./../../src/components/GameGrid";
 import React from "react";
@@ -26,4 +26,14 @@ describe("GameGrid", () => {
     expect(message).toBeInTheDocument();
     expect(message).toHaveTextContent(/no games/i);
   });
+
+  it('should render an error message when there is an error', async () => {
+    server.use(
+      http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
+    );
+
+     render(<GameGrid />);
+
+     expect(await screen.findByText(/error/i)).toBeInTheDocument();
+  })
 });
