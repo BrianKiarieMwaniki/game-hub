@@ -9,7 +9,7 @@ export interface Game {
 //   slug: string;
 //   released: Date;
 //   tba: boolean;
-//   background_image: string;
+  background_image: string;
 //   rating: number;
 //   rating_top: number;
 //   ratings: AddedByStatus;
