@@ -17,7 +17,7 @@ export interface Game {
   //   reviews_text_count: string;
   //   added: number;
   //   added_by_status: AddedByStatus;
-  //   metacritic: number;
+  metacritic: number;
   //   playtime: number;
   //   suggestions_count: number;
   //   updated: Date;
