@@ -1,11 +1,11 @@
+export interface FetchResponse<T>{
+  count:number;
+  results: T[];
+}
+
 export interface FetchGamesResponse {
   count: number;
   results: Game[];
-}
-
-export interface FetchGenreResponse{
-  count: number;
-  results: Genre[];
 }
 
 export interface Game {
