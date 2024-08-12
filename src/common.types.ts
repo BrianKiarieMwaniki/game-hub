@@ -6,10 +6,12 @@ export interface FetchGamesResponse {
 export interface Game {
   id: number;
   name: string;
+  background_image: string;
+  metacritic: number;
+  parent_platforms: { platform: Platform }[];
   //   slug: string;
   //   released: Date;
   //   tba: boolean;
-  background_image: string;
   //   rating: number;
   //   rating_top: number;
   //   ratings: AddedByStatus;
@@ -17,13 +19,11 @@ export interface Game {
   //   reviews_text_count: string;
   //   added: number;
   //   added_by_status: AddedByStatus;
-  metacritic: number;
   //   playtime: number;
   //   suggestions_count: number;
   //   updated: Date;
   //   esrb_rating: EsrbRating;
   //   platforms: Platform[];
-  parent_platforms: { platform: Platform }[];
 }
 
 export interface AddedByStatus {}

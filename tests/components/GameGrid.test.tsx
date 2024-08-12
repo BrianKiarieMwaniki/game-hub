@@ -9,9 +9,12 @@ describe("GameGrid", () => {
   it("should render the list of games", async () => {
     render(<GameGrid />);
 
-    const gameItems = await screen.findAllByRole("listitem");
-
-    expect(gameItems.length).toBeGreaterThan(0);
+    const gameGrid = await screen.findByTestId('game-grid');
+    const gameCards = await screen.findAllByTestId('game-card');
+    
+    expect(gameGrid).toBeInTheDocument();
+    expect(gameCards.length).toBeGreaterThan(0);
+    expect(gameGrid).toContainElement(gameCards[0]);
   });
 
   it("should not render games when no games are found", async () => {
