@@ -3,6 +3,11 @@ export interface FetchGamesResponse {
   results: Game[];
 }
 
+export interface FetchGenreResponse{
+  count: number;
+  results: Genre[];
+}
+
 export interface Game {
   id: number;
   name: string;
@@ -26,21 +31,16 @@ export interface Game {
   //   platforms: Platform[];
 }
 
-export interface AddedByStatus {}
-
 export interface Platform {
   id: number;
   slug: string;
   name: string;
 }
-
-// export interface Platform {
-//   platform: EsrbRating;
-//   released_at: string;
-//   requirements: Requirements;
-// }
-
-export interface Requirements {
-  minimum: string;
-  recommended: string;
+export interface Genre {
+  id: number;
+  name: string;
+  slug: string;
+  games_count: number;
+  image_background: string;
 }
+
