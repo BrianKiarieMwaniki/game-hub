@@ -1,4 +1,6 @@
-import { Game } from "../../src/common.types";
+import { Game, Genre } from "../../src/common.types";
+
+const placeHolderImageUrl = "https://via.placeholder.com/300x200";
 
 export const games: Game[] = [
   {
@@ -89,3 +91,35 @@ export const games: Game[] = [
     ],
   },
 ];
+
+
+export const genres: Genre[] = [
+  {
+    id: 0,
+    name:"Action",
+    slug:"action",
+    games_count:10,
+    image_background: placeHolderImageUrl
+  },
+  {
+    id: 1,
+    name:"Adventure",
+    slug:"adventure",
+    games_count:20,
+    image_background: placeHolderImageUrl
+  },
+  {
+    id: 2,
+    name:"Shooter",
+    slug:"shooter",
+    games_count:17,
+    image_background: placeHolderImageUrl
+  },
+  {
+    id: 3,
+    name:"Racing",
+    slug:"racing",
+    games_count:11,
+    image_background: placeHolderImageUrl
+  },
+]

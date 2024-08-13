@@ -7,7 +7,7 @@ import { server } from "../mocks/server";
 
 describe("GameGrid", () => {
   it("should render the list of games", async () => {
-    render(<GameGrid />);
+    render(<GameGrid selectedGenre={null} />);
 
     const gameGrid = await screen.findByTestId('game-grid');
     const gameCards = await screen.findAllByTestId('game-card');
@@ -22,7 +22,7 @@ describe("GameGrid", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.json([]))
     );
 
-    render(<GameGrid />);
+    render(<GameGrid selectedGenre={null}/>);
 
     const message = await screen.findByText(/no games/i);
 
@@ -35,7 +35,7 @@ describe("GameGrid", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-     render(<GameGrid />);
+     render(<GameGrid selectedGenre={null}/>);
 
      expect(await screen.findByText(/error/i)).toBeInTheDocument();
   })
