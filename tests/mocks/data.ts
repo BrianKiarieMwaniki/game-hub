@@ -1,4 +1,4 @@
-import { Game, Genre } from "../../src/common.types";
+import { Game, Genre, Platform } from "../../src/common.types";
 
 const placeHolderImageUrl = "https://via.placeholder.com/300x200";
 
@@ -123,3 +123,26 @@ export const genres: Genre[] = [
     image_background: placeHolderImageUrl
   },
 ]
+
+export const platforms:Platform[] = [
+  {
+    id:0,
+    name: 'Nintendo',
+    slug: 'nintendo'
+  },
+  {
+    id:1,
+    name: 'PC',
+    slug: 'pc'
+  },
+  {
+    id:2,
+    name: 'XBox',
+    slug: 'xbox'
+  },
+  {
+    id:3,
+    name: 'Play Station',
+    slug: 'play station'
+  },
+] 
