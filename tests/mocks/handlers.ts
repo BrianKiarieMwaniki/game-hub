@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { games, genres } from "./data";
+import { games, genres, platforms } from "./data";
 
 export const baseUrl = "https://api.rawg.io/api";
 
@@ -16,5 +16,12 @@ export const handlers = [
       count: genres.length,
       results: genres,
     });
+  }),
+
+  http.get(`${baseUrl}/platforms/lists/parents`, () =>{
+    return HttpResponse.json({
+      count: platforms.length,
+      results: platforms
+    })
   }),
 ];

@@ -4,10 +4,19 @@ import useGames from "./../../src/hooks/useGames";
 import { games } from "../mocks/data";
 import { server } from "../mocks/server";
 import { http, HttpResponse } from "msw";
+import { GameQuery } from "../../src/common.types";
 
 describe("useGames", () => {
+
+  const renderuseGamesHook = () =>
+  {
+    const gameQuery: GameQuery = {genre: null, platform:null};
+    const {result } = renderHook(() => useGames(gameQuery));
+
+    return {result};
+  }
   it("should render a list of games", async () => {
-    const { result } = renderHook(() => useGames(null));
+    const { result } = renderuseGamesHook();
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
@@ -24,7 +33,7 @@ describe("useGames", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-    const { result } = renderHook(() => useGames(null));
+    const { result } = renderuseGamesHook();
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
