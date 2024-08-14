@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import ResizeObserver from 'resize-observer-polyfill'
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { server } from "./mocks/server";
-import "@testing-library/jest-dom/vitest";
+
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());

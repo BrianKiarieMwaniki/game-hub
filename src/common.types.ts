@@ -1,5 +1,10 @@
-export interface FetchResponse<T>{
-  count:number;
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+}
+
+export interface FetchResponse<T> {
+  count: number;
   results: T[];
 }
 
@@ -43,4 +48,3 @@ export interface Genre {
   games_count: number;
   image_background: string;
 }
-
