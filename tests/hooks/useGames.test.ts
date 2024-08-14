@@ -7,7 +7,7 @@ import { http, HttpResponse } from "msw";
 
 describe("useGames", () => {
   it("should render a list of games", async () => {
-    const { result } = renderHook(() => useGames(null));
+    const { result } = renderHook(() => useGames(null, null));
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
@@ -24,7 +24,7 @@ describe("useGames", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-    const { result } = renderHook(() => useGames(null));
+    const { result } = renderHook(() => useGames(null, null));
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
