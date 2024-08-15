@@ -1,6 +1,7 @@
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
+  sortOrder: string;
 }
 
 export interface FetchResponse<T> {
