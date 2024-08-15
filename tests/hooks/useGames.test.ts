@@ -10,7 +10,7 @@ describe("useGames", () => {
 
   const renderuseGamesHook = () =>
   {
-    const gameQuery: GameQuery = {genre: null, platform:null};
+    const gameQuery: GameQuery = {genre: null, platform:null, sortOrder: ""};
     const {result } = renderHook(() => useGames(gameQuery));
 
     return {result};

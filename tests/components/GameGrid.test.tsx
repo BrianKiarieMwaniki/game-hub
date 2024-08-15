@@ -9,7 +9,7 @@ import "@testing-library/jest-dom/vitest";
 
 describe("GameGrid", () => {
   const renderGameGridComponent = () =>{
-    const gameQuery: GameQuery = {genre: null, platform: null};
+    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: ""};
     render(<GameGrid gameQuery={gameQuery}/>)
 
   };
