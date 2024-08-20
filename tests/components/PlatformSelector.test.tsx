@@ -72,7 +72,7 @@ describe("PlatformSelector", () => {
         `platform-menuitem-${platform.id}`
       );
 
-      expect(menuItem).toBeInTheDocument();
+      expect(menuItem).toHaveTextContent(`${platform.name}`)
     });
   });
 
