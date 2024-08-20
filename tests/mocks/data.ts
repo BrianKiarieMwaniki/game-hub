@@ -31,6 +31,7 @@ export const games: Game[] = [
         },
       },
     ],
+    rating_top: 4,
   },
   {
     id: 1,
@@ -60,6 +61,7 @@ export const games: Game[] = [
         },
       },
     ],
+    rating_top: 5,
   },
   {
     id: 2,
@@ -89,60 +91,60 @@ export const games: Game[] = [
         },
       },
     ],
+    rating_top: 4,
   },
 ];
-
 
 export const genres: Genre[] = [
   {
     id: 0,
-    name:"Action",
-    slug:"action",
-    games_count:10,
-    image_background: placeHolderImageUrl
+    name: "Action",
+    slug: "action",
+    games_count: 10,
+    image_background: placeHolderImageUrl,
   },
   {
     id: 1,
-    name:"Adventure",
-    slug:"adventure",
-    games_count:20,
-    image_background: placeHolderImageUrl
+    name: "Adventure",
+    slug: "adventure",
+    games_count: 20,
+    image_background: placeHolderImageUrl,
   },
   {
     id: 2,
-    name:"Shooter",
-    slug:"shooter",
-    games_count:17,
-    image_background: placeHolderImageUrl
+    name: "Shooter",
+    slug: "shooter",
+    games_count: 17,
+    image_background: placeHolderImageUrl,
   },
   {
     id: 3,
-    name:"Racing",
-    slug:"racing",
-    games_count:11,
-    image_background: placeHolderImageUrl
+    name: "Racing",
+    slug: "racing",
+    games_count: 11,
+    image_background: placeHolderImageUrl,
   },
-]
+];
 
-export const platforms:Platform[] = [
+export const platforms: Platform[] = [
   {
-    id:0,
-    name: 'Nintendo',
-    slug: 'nintendo'
+    id: 0,
+    name: "Nintendo",
+    slug: "nintendo",
   },
   {
-    id:1,
-    name: 'PC',
-    slug: 'pc'
+    id: 1,
+    name: "PC",
+    slug: "pc",
   },
   {
-    id:2,
-    name: 'XBox',
-    slug: 'xbox'
+    id: 2,
+    name: "XBox",
+    slug: "xbox",
   },
   {
-    id:3,
-    name: 'Play Station',
-    slug: 'play station'
+    id: 3,
+    name: "Play Station",
+    slug: "play station",
   },
-] 
+];
