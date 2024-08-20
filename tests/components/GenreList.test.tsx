@@ -6,6 +6,7 @@ import { genres } from "../mocks/data";
 import { server } from "../mocks/server";
 import { http, HttpResponse } from "msw";
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom/vitest'
 
 describe("GenreList", () => {
   const renderGenreListComponent = async () => {
@@ -17,6 +18,15 @@ describe("GenreList", () => {
       genreList: await screen.findByTestId("genre-list"),
     };
   };
+
+  it('should render a heading', async () => {
+    await renderGenreListComponent();
+
+    const heading = screen.getByRole('heading');
+
+    expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent(/genres/i);
+  })
 
   it("should render the list of genres", async () => {
     const { genreList } = await renderGenreListComponent();
