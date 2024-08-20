@@ -2,12 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import PlatformSelector from "./../../src/components/PlatformSelector";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { platforms } from "../mocks/data";
 import userEvent from "@testing-library/user-event";
-import { http, HttpResponse } from "msw";
-import { server } from "../mocks/server";
 import { Platform } from "../../src/common.types";
 import '@testing-library/jest-dom/vitest'
+import platforms from "../../src/data/platforms";
 
 describe("PlatformSelector", () => {
   const renderPlatformSelectorComponent = async (
@@ -74,33 +72,13 @@ describe("PlatformSelector", () => {
 
       expect(menuItem).toHaveTextContent(`${platform.name}`)
     });
-  });
-
-  it("should not render anything when there is an error", async () => {
-    server.use(
-      http.get("https://api.rawg.io/api/platforms/lists/parents", () =>
-        HttpResponse.error()
-      )
-    );
-
-    const onSelectPlatform = vi.fn();
-    render(
-      <PlatformSelector
-        onSelectPlatform={onSelectPlatform}
-        selectedPlatform={null}
-      />
-    );
-
-    const menuList = await screen.findByTestId("platforms-menulist");
-
-    expect(menuList).not.toBeInTheDocument();
-  });
+  });  
 
   it("should call onSelectPlatform when menuItem is clicked", async () => {
     const { onSelectPlatform } = await renderPlatformSelectorComponent();
 
     //Get menu item to click
-    const menuItem = await screen.findByTestId("platform-menuitem-0");
+    const menuItem = await screen.findByTestId("platform-menuitem-1");
 
     const user = userEvent.setup();
     await user.click(menuItem);
