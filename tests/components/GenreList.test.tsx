@@ -3,13 +3,16 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import GenreList from "./../../src/components/GenreList";
 import genres from "../../src/data/genres";
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom/vitest'
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom/vitest";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
 
 describe("GenreList", () => {
   const renderGenreListComponent = async () => {
     const onSelectGenre = vi.fn();
-    render(<GenreList onSelectGenre={onSelectGenre} selectedGenre={null} />);
+    render(<GenreList onSelectGenre={onSelectGenre} selectedGenre={null} />, {
+      wrapper: queryProviderWrapper(),
+    });
 
     return {
       onSelectGenre,
@@ -17,14 +20,14 @@ describe("GenreList", () => {
     };
   };
 
-  it('should render a heading', async () => {
+  it("should render a heading", async () => {
     await renderGenreListComponent();
 
-    const heading = screen.getByRole('heading');
+    const heading = screen.getByRole("heading");
 
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveTextContent(/genres/i);
-  })
+  });
 
   it("should render the list of genres", async () => {
     const { genreList } = await renderGenreListComponent();
@@ -37,14 +40,15 @@ describe("GenreList", () => {
     });
   });
 
+  it("Should call onSelectGenre when list item is clicked", async () => {
+    const { onSelectGenre } = await renderGenreListComponent();
 
-  it('Should call onSelectGenre when list item is clicked', async() => {
-    const {onSelectGenre} = await renderGenreListComponent();
-
-    const button = await screen.findByRole('button', {name: `${genres[0].name}`})
+    const button = await screen.findByRole("button", {
+      name: `${genres[0].name}`,
+    });
     const user = userEvent.setup();
     await user.click(button);
 
     expect(onSelectGenre).toHaveBeenCalled();
-  })
+  });
 });
