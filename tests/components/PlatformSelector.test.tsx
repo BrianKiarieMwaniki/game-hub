@@ -5,7 +5,8 @@ import React from "react";
 import userEvent from "@testing-library/user-event";
 import { Platform } from "../../src/common.types";
 import '@testing-library/jest-dom/vitest'
-import platforms from "../../src/data/platforms";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
+import { platforms } from "../mocks/data";
 
 describe("PlatformSelector", () => {
   const renderPlatformSelectorComponent = async (
@@ -17,7 +18,9 @@ describe("PlatformSelector", () => {
       <PlatformSelector
         onSelectPlatform={onSelectPlatform}
         selectedPlatform={selectedPlatform ? selectedPlatform: null }
-      />
+      />, {
+        wrapper:queryProviderWrapper()
+      }
     );
 
     return {
@@ -40,15 +43,7 @@ describe("PlatformSelector", () => {
   });
 
   it("should set menulist to visible when dropdown is clicked", async () => {
-    const onSelectPlatform = vi.fn();
-    render(
-      <PlatformSelector
-        onSelectPlatform={onSelectPlatform}
-        selectedPlatform={null}
-      />
-    );
-
-    const dropDown = screen.getByTestId("platforms-dropdown");
+   const {dropDown} = await renderPlatformSelectorComponent();
 
     const user = userEvent.setup();
     await user.tripleClick(dropDown);

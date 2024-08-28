@@ -1,15 +1,19 @@
-import { renderHook } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import usePlatforms from "./../../src/hooks/usePlatforms";
-import platforms from "../../src/data/platforms";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
 
 describe("usePlatforms", () => {
   it("should return a list of platforms", async () => {
-    const { result } = renderHook(() => usePlatforms());    
+    const { result } = renderHook(() => usePlatforms(), {
+      wrapper: queryProviderWrapper()
+    });    
 
-    expect(result.current.data.length).toBeGreaterThan(0);
-    expect(result.current.data).toEqual(platforms);
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current.data).toBeDefined();
+    expect(result.current.data!.length).toBeGreaterThan(0);
   });
 
 
