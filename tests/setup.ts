@@ -9,7 +9,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-// global.ResizeObserver = ResizeObserver;
+//  global.ResizeObserver = ResizeObserver;
 
 // window.PointerEvent = class PointerEvent extends Event {};
 window.HTMLElement.prototype.scrollIntoView = vi.fn();

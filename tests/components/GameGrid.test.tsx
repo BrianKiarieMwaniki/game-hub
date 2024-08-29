@@ -6,12 +6,14 @@ import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { GameQuery } from "../../src/common.types";
 import "@testing-library/jest-dom/vitest";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
 
 describe("GameGrid", () => {
   const renderGameGridComponent = () =>{
-    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: ""};
-    render(<GameGrid gameQuery={gameQuery}/>)
-
+    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: "", searchText: ""};
+    render(<GameGrid gameQuery={gameQuery}/>,{
+      wrapper: queryProviderWrapper()
+    })
   };
 
   it("should render the list of games", async () => {
@@ -25,7 +27,7 @@ describe("GameGrid", () => {
     expect(gameGrid).toContainElement(gameCards[0]);
   });
 
-  it("should not render games when no games are found", async () => {
+  it("should render no games message when no games are found", async () => {
     server.use(
       http.get("https://api.rawg.io/api/games", () => HttpResponse.json([]))
     );
