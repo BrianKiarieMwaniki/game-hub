@@ -1,17 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { FetchResponse, Platform } from "../common.types";
-import apiClient from "../services/apiClient";
+import { Platform } from "../common.types";
 import platforms from "../data/platforms";
+import platformService from "../services/platformService";
 
 const usePlatforms = () =>
   useQuery<Platform[], Error>({
     queryKey: ["platforms"],
-    queryFn: () => {
-      const platforms = apiClient
-        .get<FetchResponse<Platform>>("/platforms/lists/parents")
-        .then((res) => res.data);
+    queryFn: async () => {
+      const {results:platforms} = await platformService.getAll();
 
-      return platforms.then((res) => res.results);
+      return platforms;
     },
     staleTime: 24 * 60 * 60 * 100, // 24h
     initialData:  platforms

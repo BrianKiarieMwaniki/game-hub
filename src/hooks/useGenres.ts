@@ -1,6 +1,6 @@
-import { FetchResponse, Genre } from "../common.types";
+import { Genre } from "../common.types";
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/apiClient";
+import genreService from "../services/genreService";
 
 const useGenres = () => {
   const {
@@ -9,12 +9,10 @@ const useGenres = () => {
     isLoading,
   } = useQuery<Genre[], Error>({
     queryKey: ["genres"],
-    queryFn: () => {
-      const response = apiClient
-        .get<FetchResponse<Genre>>("/genres")
-        .then((res) => res.data);
+    queryFn: async () => {
+      const {results} = await genreService.getAll();
 
-      return response.then((res) => res.results);
+      return results;
     },
   });
 
