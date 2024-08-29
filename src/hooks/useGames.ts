@@ -1,21 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Game, GameQuery } from "../common.types";
 import GameSerive from "../services/gameServices";
 
-
 const useGames = (gameQuery: GameQuery) => {
-  const { data, error, isLoading } = useQuery<Game[], Error>({
+  const { data, error, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage} = useInfiniteQuery<Game[], Error>({
     queryKey: ["games", gameQuery],
-    queryFn: async () => {
-      const gameService = new GameSerive("/games", gameQuery);
+    queryFn: async ({ pageParam = 1 }) => {
+      const gameService = new GameSerive("/games", {
+        page: pageParam,
+        ...gameQuery,
+      });
 
-      const {results:games} = await gameService.getAll();
+      const { results: games } = await gameService.getAll();
 
       return games;
     },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage ? allPages.length + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
 
-  return { data, error, isLoading };
+  return { data, error, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage};
 };
 
 export default useGames;

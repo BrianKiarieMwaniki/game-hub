@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { FetchResponse, GameQuery } from "../common.types";
 
 
@@ -20,8 +20,8 @@ class APIClient<T> {
     });
   }
 
-  getAll = () => {
-    return this.axiosInstance.get<FetchResponse<T>>(this.endpoint).then((res) => res.data);
+  getAll = (config?: AxiosRequestConfig) => {
+    return this.axiosInstance.get<FetchResponse<T>>(this.endpoint, config).then((res) => res.data);
   };
 }
 

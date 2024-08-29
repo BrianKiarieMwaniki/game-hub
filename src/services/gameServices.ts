@@ -13,6 +13,7 @@ class GameSerive extends APIClient<Game>{
    override getAll = () =>{
         return this.axiosInstance.get<FetchResponse<Game>>("/games", {
           params: {
+            page: this.gameQuery.page,
             genres: this.gameQuery.genre?.id,
             parent_platforms: this.gameQuery.platform?.id,
             ordering: this.gameQuery.sortOrder,
