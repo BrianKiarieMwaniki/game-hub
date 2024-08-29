@@ -5,13 +5,16 @@ import { games } from "../mocks/data";
 import { server } from "../mocks/server";
 import { http, HttpResponse } from "msw";
 import { GameQuery } from "../../src/common.types";
+import queryProviderWrapper from './../utils/queryProviderWrapper';
 
 describe("useGames", () => {
 
   const renderuseGamesHook = () =>
   {
-    const gameQuery: GameQuery = {genre: null, platform:null, sortOrder: ""};
-    const {result } = renderHook(() => useGames(gameQuery));
+    const gameQuery: GameQuery = {genre: null, platform:null, sortOrder: "", searchText:""};
+    const {result } = renderHook(() => useGames(gameQuery), {
+      wrapper: queryProviderWrapper()
+    });
 
     return {result};
   }
@@ -24,7 +27,8 @@ describe("useGames", () => {
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
     const gamesResult = result.current.data;
-    expect(gamesResult.length).toBeGreaterThan(0);
+    expect(gamesResult).toBeDefined();
+    expect(gamesResult!.length).toBeGreaterThan(0);
     expect(gamesResult).toEqual(games);
   });
 

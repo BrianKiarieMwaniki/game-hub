@@ -10,11 +10,6 @@ export interface FetchResponse<T> {
   results: T[];
 }
 
-export interface FetchGamesResponse {
-  count: number;
-  results: Game[];
-}
-
 export interface Game {
   id: number;
   name: string;

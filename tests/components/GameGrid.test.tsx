@@ -6,31 +6,35 @@ import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { GameQuery } from "../../src/common.types";
 import "@testing-library/jest-dom/vitest";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
 
-describe("GameGrid", () => {
-  const renderGameGridComponent = () =>{
-    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: ""};
-    render(<GameGrid gameQuery={gameQuery}/>)
+describe("GameGrid",  () => {
+  const renderGameGridComponent = async () =>{
+    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: "", searchText: ""};
+    render(<GameGrid gameQuery={gameQuery}/>,{
+      wrapper: queryProviderWrapper()
+    })
 
+    return {
+      gameGrid: await screen.findByTestId("game-grid"),
+      gameCards: await screen.findAllByTestId('game-card')
+    };
   };
 
   it("should render the list of games", async () => {
-    renderGameGridComponent();
-
-    const gameGrid = await screen.findByTestId('game-grid');
-    const gameCards = await screen.findAllByTestId('game-card');
+    const {gameGrid, gameCards} = await renderGameGridComponent();    
     
     expect(gameGrid).toBeInTheDocument();
     expect(gameCards.length).toBeGreaterThan(0);
     expect(gameGrid).toContainElement(gameCards[0]);
   });
 
-  it("should not render games when no games are found", async () => {
+  it("should render no games message when no games are found", async () => {
     server.use(
       http.get("https://api.rawg.io/api/games", () => HttpResponse.json([]))
     );
 
-    renderGameGridComponent();
+    await renderGameGridComponent();
 
     const message = await screen.findByText(/no games/i);
 
@@ -43,7 +47,7 @@ describe("GameGrid", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-     renderGameGridComponent();
+     await renderGameGridComponent();
 
      expect(await screen.findByText(/error/i)).toBeInTheDocument();
   })
