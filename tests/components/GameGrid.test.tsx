@@ -8,19 +8,21 @@ import { GameQuery } from "../../src/common.types";
 import "@testing-library/jest-dom/vitest";
 import queryProviderWrapper from "../utils/queryProviderWrapper";
 
-describe("GameGrid", () => {
-  const renderGameGridComponent = () =>{
+describe("GameGrid",  () => {
+  const renderGameGridComponent = async () =>{
     const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: "", searchText: ""};
     render(<GameGrid gameQuery={gameQuery}/>,{
       wrapper: queryProviderWrapper()
     })
+
+    return {
+      gameGrid: await screen.findByTestId("game-grid"),
+      gameCards: await screen.findAllByTestId('game-card')
+    };
   };
 
   it("should render the list of games", async () => {
-    renderGameGridComponent();
-
-    const gameGrid = await screen.findByTestId('game-grid');
-    const gameCards = await screen.findAllByTestId('game-card');
+    const {gameGrid, gameCards} = await renderGameGridComponent();    
     
     expect(gameGrid).toBeInTheDocument();
     expect(gameCards.length).toBeGreaterThan(0);
@@ -32,7 +34,7 @@ describe("GameGrid", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.json([]))
     );
 
-    renderGameGridComponent();
+    await renderGameGridComponent();
 
     const message = await screen.findByText(/no games/i);
 
@@ -45,7 +47,7 @@ describe("GameGrid", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-     renderGameGridComponent();
+     await renderGameGridComponent();
 
      expect(await screen.findByText(/error/i)).toBeInTheDocument();
   })
