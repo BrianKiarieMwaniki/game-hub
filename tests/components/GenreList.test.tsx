@@ -1,16 +1,16 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import GenreList from "./../../src/components/GenreList";
-import genres from "../../src/data/genres";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/vitest";
+import userEvent from "@testing-library/user-event";
+import { genres } from "../mocks/data";
 import queryProviderWrapper from "../utils/queryProviderWrapper";
 
 describe("GenreList", () => {
   const renderGenreListComponent = async () => {
     const onSelectGenre = vi.fn();
-    render(<GenreList onSelectGenre={onSelectGenre} selectedGenre={null} />, {
+    render(<GenreList onSelectGenre={onSelectGenre}/>, {
       wrapper: queryProviderWrapper(),
     });
 

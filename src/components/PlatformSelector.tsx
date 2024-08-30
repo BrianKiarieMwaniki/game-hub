@@ -2,26 +2,47 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
 import usePlatforms from "../hooks/usePlatforms";
 import { Platform } from "../common.types";
+import { useEffect, useState } from "react";
 
-
-interface Props{
-    onSelectPlatform: (platform:Platform) => void;   
-    selectedPlatform: Platform | null;
+interface Props {
+  onSelectPlatform: (platform: Platform) => void;
+  selectedPlatformId?: number;
 }
 
-const PlatformSelector = ({onSelectPlatform, selectedPlatform}:Props) => {
-  const { data: platforms , error} = usePlatforms();
+const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
+  const { data: platforms, error } = usePlatforms();
+  const [selectedPlatformName, setSelectedPlatformName] = useState<string>();
 
-  if(error) return null;
+  useEffect(() =>{
+      const name = platforms.find(
+        (platform) => platform.id === selectedPlatformId
+      )?.name;
+
+    if(name)
+      setSelectedPlatformName(name);
+
+  },[selectedPlatformId])
+
+  if (error) return null;
 
   return (
     <Menu>
-      <MenuButton as={Button} rightIcon={<BsChevronDown />} data-testid='platforms-dropdown'>
-        {selectedPlatform?.name || 'Platforms'}
+      <MenuButton
+        as={Button}
+        rightIcon={<BsChevronDown />}
+        data-testid="platforms-dropdown"
+      >
+        {selectedPlatformName || "Platforms"}
       </MenuButton>
-      <MenuList data-testid='platforms-menulist'>
+      <MenuList data-testid="platforms-menulist">
         {platforms?.map((platform) => (
-          <MenuItem key={platform.id} onClick={() => onSelectPlatform(platform)} data-testid={`platform-menuitem-${platform.id}`} >{platform.name}</MenuItem>
+          <MenuItem
+            key={platform.id}
+            onClick={() => onSelectPlatform(platform)}
+            data-testid={`platform-menuitem-${platform.id}`}
+          >
+            {platform.name}
+          </MenuItem>
         ))}
       </MenuList>
     </Menu>

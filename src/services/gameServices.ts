@@ -14,8 +14,8 @@ class GameSerive extends APIClient<Game>{
         return this.axiosInstance.get<FetchResponse<Game>>("/games", {
           params: {
             page: this.gameQuery.page,
-            genres: this.gameQuery.genre?.id,
-            parent_platforms: this.gameQuery.platform?.id,
+            genres: this.gameQuery.genreId,
+            parent_platforms: this.gameQuery.platformId,
             ordering: this.gameQuery.sortOrder,
             search: this.gameQuery.searchText,
           },
