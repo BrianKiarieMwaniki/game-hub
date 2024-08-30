@@ -5,73 +5,73 @@ import { render, screen } from "@testing-library/react";
 import GameHeading from "./../../src/components/GameHeading";
 import React from "react";
 import "@testing-library/jest-dom/vitest";
+import queryProviderWrapper from "../utils/queryProviderWrapper";
 
 describe("GameHeading", () => {
-  const renderGameHeading = (gameQuery: GameQuery) => {
-    render(<GameHeading gameQuery={gameQuery} />);
+  const renderGameHeading =  async (gameQuery: GameQuery) => {
+    render(
+    <GameHeading gameQuery={gameQuery} />,{
+      wrapper: queryProviderWrapper()
+    });
 
     return {
-      heading: screen.getByTestId("game-heading"),
+      heading:await screen.findByTestId("game-heading"),
     };
   };
 
-  it("should render just games when no platform and genre are specified", () => {
-    const gameQuery: GameQuery = {
-      platform: null,
-      genre: null,
+  it("should render just games when no platform and genre are specified", async () => {
+    const gameQuery: GameQuery = {     
       sortOrder: "",
       searchText: "",
     };
 
-    const { heading } = renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading(gameQuery);
 
     expect(heading).toHaveTextContent("Games");
   });
 
-  it("should render heading with genre name when genre is specified", () => {
+  it("should render heading with genre name when genre is specified", async () => {
     const genre = genres[0];
-    const gameQuery: GameQuery = {
-      platform: null,
-      genre: genre,
+    const gameQuery: GameQuery = {      
+      genreId: genre.id,
       sortOrder: "",
       searchText: "",
     };
 
-    const { heading } = renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading(gameQuery);
 
     const expectedHeading = `${genre.name} Games`;
 
     expect(heading).toHaveTextContent(expectedHeading);
   });
 
-  it("should render heading with platform name when platform is specified", () => {
+  it("should render heading with platform name when platform is specified", async () => {
     const platform = platforms[0];
 
     const gameQuery: GameQuery = {
-      platform: platform,
-      genre: null,
+      platformId: platform.id,
       sortOrder: "",
       searchText: "",
     };
 
-    const { heading } = renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading(gameQuery);
 
     const expectedHeading = `${platform.name} Games`;
 
     expect(heading).toHaveTextContent(expectedHeading);
   });
 
-  it("should render heading with both platform name and genre name when both platform and genre are specified", () => {
+  it("should render heading with both platform name and genre name when both platform and genre are specified",async () => {
     const platform = platforms[0];
     const genre = genres[0];
     const gameQuery: GameQuery = {
-      platform: platform,
-      genre: genre,
+      platformId: platform.id,
+      genreId: genre.id,
       sortOrder: "",
       searchText: "",
     };
 
-    const { heading } = renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading(gameQuery);
 
     const expectedHeading = `${platform.name} ${genre.name} Games`;
 

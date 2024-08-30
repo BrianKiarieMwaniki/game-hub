@@ -1,28 +1,28 @@
-import { useQuery } from "@tanstack/react-query";
-import { FetchResponse, Game, GameQuery } from "../common.types";
-import apiClient from "../services/apiClient";
-
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Game, GameQuery } from "../common.types";
+import GameSerive from "../services/gameServices";
 
 const useGames = (gameQuery: GameQuery) => {
-  const { data, error, isLoading } = useQuery<Game[], Error>({
+  const { data, error, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage} = useInfiniteQuery<Game[], Error>({
     queryKey: ["games", gameQuery],
-    queryFn: () => {
-      const response = apiClient
-        .get<FetchResponse<Game>>("/games", {
-          params: {
-            genres: gameQuery.genre?.id,
-            parent_platforms: gameQuery.platform?.id,
-            ordering: gameQuery.sortOrder,
-            search: gameQuery.searchText,
-          },
-        })
-        .then((res) => res.data);
+    queryFn: async ({ pageParam = 1 }) => {
+      const gameService = new GameSerive("/games", {
+        page: pageParam,
+        ...gameQuery,
+      });
 
-      return response.then((res) => res.results);
+      const { results: games } = await gameService.getAll();
+
+      return games;
     },
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage ? allPages.length + 1 : undefined;
+    },
+    initialPageParam: 1,
+    staleTime: 24 * 60 * 60 * 1000 // 24h
   });
 
-  return { data, error, isLoading };
+  return { data, error, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage};
 };
 
 export default useGames;

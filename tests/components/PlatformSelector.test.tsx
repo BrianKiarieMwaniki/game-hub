@@ -17,7 +17,7 @@ describe("PlatformSelector", () => {
     render(
       <PlatformSelector
         onSelectPlatform={onSelectPlatform}
-        selectedPlatform={selectedPlatform ? selectedPlatform: null }
+        selectedPlatformId={selectedPlatform?.id }
       />, {
         wrapper:queryProviderWrapper()
       }

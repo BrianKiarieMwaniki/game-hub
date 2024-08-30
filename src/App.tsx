@@ -12,8 +12,8 @@ function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   const {
-    genre: selectedGenre,
-    platform: selectedPlatform,
+    genreId: selectedGenreId,
+    platformId: selectedPlatformId,
     sortOrder,
   } = gameQuery;
 
@@ -34,8 +34,8 @@ function App() {
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <GenreList
-            selectedGenre={selectedGenre}
-            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            selectedGenreId={selectedGenreId}
+            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genreId: genre.id })}
           />
         </GridItem>
       </Show>
@@ -44,9 +44,9 @@ function App() {
           <GameHeading gameQuery={gameQuery}/>
           <HStack spacing={5}  marginBottom={5}>
             <PlatformSelector
-              selectedPlatform={selectedPlatform}
+              selectedPlatformId={selectedPlatformId}
               onSelectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platform })
+                setGameQuery({ ...gameQuery, platformId: platform.id })
               }
             />
             <SortSelector
