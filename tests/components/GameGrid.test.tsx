@@ -7,23 +7,31 @@ import { server } from "../mocks/server";
 import { GameQuery } from "../../src/common.types";
 import "@testing-library/jest-dom/vitest";
 import queryProviderWrapper from "../utils/queryProviderWrapper";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-describe("GameGrid",  () => {
-  const renderGameGridComponent = async () =>{
-    const gameQuery: GameQuery = {genre: null, platform: null, sortOrder: "", searchText: ""};
-    render(<GameGrid gameQuery={gameQuery}/>,{
-      wrapper: queryProviderWrapper()
-    })
+describe("GameGrid", () => {
+  const renderGameGridComponent = async () => {
+    const gameQuery: GameQuery = {
+      genre: null,
+      platform: null,
+      sortOrder: "",
+      searchText: "",
+    };
+    render(
+        <GameGrid gameQuery={gameQuery} />,{
+          wrapper: queryProviderWrapper()
+        }     
+    );
 
     return {
       gameGrid: await screen.findByTestId("game-grid"),
-      gameCards: await screen.findAllByTestId('game-card')
+      gameCards: await screen.findAllByTestId("game-card"),
     };
   };
 
   it("should render the list of games", async () => {
-    const {gameGrid, gameCards} = await renderGameGridComponent();    
-    
+    const { gameGrid, gameCards } = await renderGameGridComponent();
+
     expect(gameGrid).toBeInTheDocument();
     expect(gameCards.length).toBeGreaterThan(0);
     expect(gameGrid).toContainElement(gameCards[0]);
@@ -42,13 +50,13 @@ describe("GameGrid",  () => {
     expect(message).toHaveTextContent(/no games/i);
   });
 
-  it('should render an error message when there is an error', async () => {
+  it("should render an error message when there is an error", async () => {
     server.use(
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-     await renderGameGridComponent();
+    await renderGameGridComponent();
 
-     expect(await screen.findByText(/error/i)).toBeInTheDocument();
-  })
+    expect(await screen.findByText(/error/i)).toBeInTheDocument();
+  });
 });

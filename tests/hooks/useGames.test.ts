@@ -28,8 +28,8 @@ describe("useGames", () => {
 
     const gamesResult = result.current.data;
     expect(gamesResult).toBeDefined();
-    expect(gamesResult!.length).toBeGreaterThan(0);
-    expect(gamesResult).toEqual(games);
+    expect(gamesResult!.pages).not.toBeUndefined();
+    expect(gamesResult?.pages.flatMap(page => page)).toEqual(games);
   });
 
   it("should return error when there is an error", async () => {
