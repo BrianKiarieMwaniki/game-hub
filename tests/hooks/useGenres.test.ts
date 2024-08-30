@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import useGenres from "./../../src/hooks/useGenres";
-import queryProviderWrapper from "../utils/queryProviderWrapper";
+import {queryProviderWrapper} from "../utils/queryProviderHelper";
 
 describe("useGenres", () => {
   it("should return a list of genres", async () => {
@@ -13,7 +13,7 @@ describe("useGenres", () => {
       expect(result.current.isLoading).toBe(false)
     });
 
-    const genreResults = result.current.genres;
+    const genreResults = result.current.data;
     expect(genreResults).toBeDefined();
     expect(genreResults!.length).toBeGreaterThan(0);      
   });

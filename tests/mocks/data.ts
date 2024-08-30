@@ -146,5 +146,5 @@ export const platforms: Platform[] = [
     id: 3,
     name: "Play Station",
     slug: "play station",
-  },
+  },  
 ];

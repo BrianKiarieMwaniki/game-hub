@@ -1,20 +1,33 @@
-import { describe, expect, it } from "vitest";
-import { GameQuery } from "./../../src/common.types";
-import { genres, platforms } from "./../mocks/data";
-import { render, screen } from "@testing-library/react";
-import GameHeading from "./../../src/components/GameHeading";
-import React from "react";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
 import "@testing-library/jest-dom/vitest";
-import queryProviderWrapper from "../utils/queryProviderWrapper";
+import { screen, waitFor } from "@testing-library/react";
+import React from "react";
+import { describe, expect, it } from "vitest";
+import { renderWithQueryClient } from "../utils/queryProviderHelper";
+import { GameQuery } from "./../../src/common.types";
+import GameHeading from "./../../src/components/GameHeading";
+import { genres, platforms } from "../../src/data";
 
 describe("GameHeading", () => {
-  const renderGameHeading =  async (gameQuery: GameQuery) => {
-    render(
-    <GameHeading gameQuery={gameQuery} />,{
-      wrapper: queryProviderWrapper()
-    });
+  const queryCache = new QueryCache();
+  const queryclient = new QueryClient({
+    queryCache: queryCache,
+    defaultOptions:{
+      queries:{
+        retry: false,
+        initialData: undefined,
+        staleTime:0
+      }
+    },
 
-    return {
+  });
+  const renderGameHeading =  async (gameQuery: GameQuery) => {
+   renderWithQueryClient(
+      queryclient,
+      <GameHeading gameQuery={gameQuery}/>
+    )
+
+    return {      
       heading:await screen.findByTestId("game-heading"),
     };
   };
@@ -31,7 +44,7 @@ describe("GameHeading", () => {
   });
 
   it("should render heading with genre name when genre is specified", async () => {
-    const genre = genres[0];
+    const genre = genres[1];
     const gameQuery: GameQuery = {      
       genreId: genre.id,
       sortOrder: "",
@@ -55,6 +68,7 @@ describe("GameHeading", () => {
     };
 
     const { heading } = await renderGameHeading(gameQuery);
+   
 
     const expectedHeading = `${platform.name} Games`;
 
@@ -71,10 +85,11 @@ describe("GameHeading", () => {
       searchText: "",
     };
 
-    const { heading } = await renderGameHeading(gameQuery);
+    const {heading } = await renderGameHeading(gameQuery);
 
     const expectedHeading = `${platform.name} ${genre.name} Games`;
 
     expect(heading).toHaveTextContent(expectedHeading);
+    
   });
 });

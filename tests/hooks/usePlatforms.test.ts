@@ -1,8 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-
 import usePlatforms from "./../../src/hooks/usePlatforms";
-import queryProviderWrapper from "../utils/queryProviderWrapper";
+import {queryProviderWrapper} from "../utils/queryProviderHelper";
 
 describe("usePlatforms", () => {
   it("should return a list of platforms", async () => {

@@ -1,26 +1,35 @@
-import { describe, expect, it, vi } from "vitest";
-import PlatformSelector from "./../../src/components/PlatformSelector";
-import { render, screen } from "@testing-library/react";
-import React from "react";
+import { QueryClient } from '@tanstack/react-query';
+import '@testing-library/jest-dom/vitest';
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import React from "react";
+import { describe, expect, it, vi } from "vitest";
 import { Platform } from "../../src/common.types";
-import '@testing-library/jest-dom/vitest'
-import queryProviderWrapper from "../utils/queryProviderWrapper";
-import { platforms } from "../mocks/data";
+import { platforms } from "../../src/data";
+import { renderWithQueryClient } from "../utils/queryProviderHelper";
+import PlatformSelector from "./../../src/components/PlatformSelector";
 
 describe("PlatformSelector", () => {
+  const queryClient = new QueryClient({
+    defaultOptions:{
+      queries:{
+        retry: false,
+        initialData: undefined,
+        staleTime:0
+      }
+    }
+  });
   const renderPlatformSelectorComponent = async (
     selectedPlatform?: Platform
   ) => {
     const onSelectPlatform = vi.fn();
 
-    render(
+    renderWithQueryClient(
+      queryClient,
       <PlatformSelector
         onSelectPlatform={onSelectPlatform}
         selectedPlatformId={selectedPlatform?.id }
-      />, {
-        wrapper:queryProviderWrapper()
-      }
+      />
     );
 
     return {
