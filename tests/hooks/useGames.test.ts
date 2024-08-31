@@ -5,13 +5,13 @@ import { games } from "../mocks/data";
 import { server } from "../mocks/server";
 import { http, HttpResponse } from "msw";
 import { GameQuery } from "../../src/common.types";
-import queryProviderWrapper from './../utils/queryProviderWrapper';
+import {queryProviderWrapper} from './../utils/queryProviderHelper';
 
 describe("useGames", () => {
 
   const renderuseGamesHook = () =>
   {
-    const gameQuery: GameQuery = {genre: null, platform:null, sortOrder: "", searchText:""};
+    const gameQuery: GameQuery = {sortOrder: "", searchText:""};
     const {result } = renderHook(() => useGames(gameQuery), {
       wrapper: queryProviderWrapper()
     });

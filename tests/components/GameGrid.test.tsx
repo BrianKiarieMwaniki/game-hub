@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import GameGrid from "./../../src/components/GameGrid";
 import React from "react";
@@ -6,22 +6,25 @@ import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server";
 import { GameQuery } from "../../src/common.types";
 import "@testing-library/jest-dom/vitest";
-import queryProviderWrapper from "../utils/queryProviderWrapper";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { renderWithQueryClient } from "../utils/queryProviderHelper";
+import { QueryClient } from "@tanstack/react-query";
 
 describe("GameGrid", () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        initialData: undefined,
+        staleTime: 0,
+      },
+    },
+  });
   const renderGameGridComponent = async () => {
     const gameQuery: GameQuery = {
-      genre: null,
-      platform: null,
       sortOrder: "",
       searchText: "",
     };
-    render(
-        <GameGrid gameQuery={gameQuery} />,{
-          wrapper: queryProviderWrapper()
-        }     
-    );
+    renderWithQueryClient(queryClient, <GameGrid gameQuery={gameQuery} />);
 
     return {
       gameGrid: await screen.findByTestId("game-grid"),
@@ -32,7 +35,9 @@ describe("GameGrid", () => {
   it("should render the list of games", async () => {
     const { gameGrid, gameCards } = await renderGameGridComponent();
 
-    expect(gameGrid).toBeInTheDocument();
+    await waitFor(() => {
+      expect(gameGrid).toBeInTheDocument();
+    });
     expect(gameCards.length).toBeGreaterThan(0);
     expect(gameGrid).toContainElement(gameCards[0]);
   });

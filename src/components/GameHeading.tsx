@@ -10,7 +10,7 @@ interface Props {
 const GameHeading = ({ gameQuery }: Props) => {
   const { platformId, genreId } = gameQuery;
 
-  const {genres} =useGenres();
+  const {data: genres} =useGenres();
   const {data:platforms} = usePlatforms();
 
   const genreName = genres?.find(genre => genre.id === genreId)?.name;

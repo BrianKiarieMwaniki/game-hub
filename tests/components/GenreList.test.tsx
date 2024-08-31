@@ -5,7 +5,7 @@ import GenreList from "./../../src/components/GenreList";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { genres } from "../mocks/data";
-import queryProviderWrapper from "../utils/queryProviderWrapper";
+import {queryProviderWrapper} from "../utils/queryProviderHelper";
 
 describe("GenreList", () => {
   const renderGenreListComponent = async () => {
