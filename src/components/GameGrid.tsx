@@ -3,9 +3,8 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { GameQuery } from "../common.types";
 import { useGames } from "../hooks";
-import GameCard from "./GameCard";
-import GameCardContainer from "./GameCardContainer";
-import GameCardSkeleton from "./GameCardSkeleton";
+import { GameCard, GameCardContainer, GameCardSkeleton } from ".";
+
 
 interface Props {
   gameQuery: GameQuery;
