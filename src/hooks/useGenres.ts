@@ -1,7 +1,8 @@
-import { Genre } from "../common.types";
 import { useQuery } from "@tanstack/react-query";
-import genreService from "../services/genreService";
+import ms from 'ms';
+import { Genre } from "../common.types";
 import genres from "../data/genres";
+import genreService from "../services/genreService";
 
 
 const useGenres = () => useQuery<Genre[], Error>({
@@ -11,7 +12,7 @@ const useGenres = () => useQuery<Genre[], Error>({
 
       return results;
     },
-    staleTime: 24 * 60 * 60 * 1000 , // 24h
+    staleTime: ms('24h') , // 24h
     initialData: genres
   });
 
