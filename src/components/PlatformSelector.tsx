@@ -2,7 +2,7 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { Platform } from "../common.types";
-import { usePlatforms } from "../hooks";
+import { useLookup, usePlatforms } from "../hooks";
 
 interface Props {
   onSelectPlatform: (platform: Platform) => void;
@@ -13,15 +13,11 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
   const { data: platforms, error } = usePlatforms();
   const [selectedPlatformName, setSelectedPlatformName] = useState<string>();
 
-  useEffect(() =>{
-      const name = platforms.find(
-        (platform) => platform.id === selectedPlatformId
-      )?.name;
+  useEffect(() => {
+    const { name } = useLookup<Platform>(platforms, selectedPlatformId);
 
-    if(name)
-      setSelectedPlatformName(name);
-
-  },[selectedPlatformId])
+    if (name) setSelectedPlatformName(name);
+  }, [selectedPlatformId]);
 
   if (error) return null;
 

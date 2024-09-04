@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import ms from "ms";
 import { Platform } from "../common.types";
 import platforms from "../data/platforms";
 import platformService from "../services/platformService";
@@ -11,7 +12,7 @@ const usePlatforms = () =>
 
       return platforms;
     },
-    staleTime: 24 * 60 * 60 * 100, // 24h
+    staleTime: ms('24h'), // 24h
     initialData:  platforms
   });
 
