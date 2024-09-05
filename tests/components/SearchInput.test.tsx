@@ -6,13 +6,11 @@ import "@testing-library/jest-dom/vitest";
 import { userEvent } from "@testing-library/user-event";
 
 describe("SearchInput", () => {
-  const renderSearchInput = () => {
-    const onSearch = vi.fn();
+  const renderSearchInput = () => {    
 
-    render(<SearchInput onSearch={onSearch} />);
+    render(<SearchInput/>);
 
-    return {
-      onSearch,
+    return {      
       searchInput: screen.getByTestId("search-input"),
     };
   };
@@ -21,16 +19,6 @@ describe("SearchInput", () => {
     const { searchInput } = renderSearchInput();
 
     expect(searchInput).toBeInTheDocument();
-  });
-
-  it("should call onSearch when if input is pressed", async () => {
-    const { onSearch, searchInput } = renderSearchInput();
-
-    const searchTerm = "test";
-    const user = userEvent.setup();
-    await user.type(searchInput, searchTerm + "{enter}");
-
-    expect(onSearch).toHaveBeenCalledWith(searchTerm);
-  });
+  }); 
  
 });
