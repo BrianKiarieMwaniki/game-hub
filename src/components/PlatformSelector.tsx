@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { Platform } from "../common.types";
 import { useLookup, usePlatforms } from "../hooks";
+import useGameQuery from "../store/store";
 
-interface Props {
-  onSelectPlatform: (platform: Platform) => void;
-  selectedPlatformId?: number;
-}
-
-const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
+const PlatformSelector = () => {
   const { data: platforms, error } = usePlatforms();
   const [selectedPlatformName, setSelectedPlatformName] = useState<string>();
+  const selectedPlatformId = useGameQuery((s) => s.gameQuery.platformId);
+  const setSelectedPlatformId = useGameQuery((s) => s.setPlatformId);
 
   useEffect(() => {
     const { name } = useLookup<Platform>(platforms, selectedPlatformId);
@@ -34,7 +32,7 @@ const PlatformSelector = ({ onSelectPlatform, selectedPlatformId }: Props) => {
         {platforms?.map((platform) => (
           <MenuItem
             key={platform.id}
-            onClick={() => onSelectPlatform(platform)}
+            onClick={() => setSelectedPlatformId(platform.id)}
             data-testid={`platform-menuitem-${platform.id}`}
           >
             {platform.name}

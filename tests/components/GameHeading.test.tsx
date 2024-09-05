@@ -1,12 +1,12 @@
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import "@testing-library/jest-dom/vitest";
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it } from "vitest";
+import { genres, platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import { GameQuery } from "./../../src/common.types";
 import GameHeading from "./../../src/components/GameHeading";
-import { genres, platforms } from "../../src/data";
 
 describe("GameHeading", () => {
   const queryCache = new QueryCache();
@@ -21,10 +21,10 @@ describe("GameHeading", () => {
     },
 
   });
-  const renderGameHeading =  async (gameQuery: GameQuery) => {
+  const renderGameHeading =  async () => {
    renderWithQueryClient(
       queryclient,
-      <GameHeading gameQuery={gameQuery}/>
+      <GameHeading/>
     )
 
     return {      
@@ -38,7 +38,7 @@ describe("GameHeading", () => {
       searchText: "",
     };
 
-    const { heading } = await renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading();
 
     expect(heading).toHaveTextContent("Games");
   });
@@ -51,7 +51,7 @@ describe("GameHeading", () => {
       searchText: "",
     };
 
-    const { heading } = await renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading();
 
     const expectedHeading = `${genre.name} Games`;
 
@@ -67,7 +67,7 @@ describe("GameHeading", () => {
       searchText: "",
     };
 
-    const { heading } = await renderGameHeading(gameQuery);
+    const { heading } = await renderGameHeading();
    
 
     const expectedHeading = `${platform.name} Games`;
@@ -85,7 +85,7 @@ describe("GameHeading", () => {
       searchText: "",
     };
 
-    const {heading } = await renderGameHeading(gameQuery);
+    const {heading } = await renderGameHeading();
 
     const expectedHeading = `${platform.name} ${genre.name} Games`;
 

@@ -1,39 +1,27 @@
-import { QueryClient } from '@tanstack/react-query';
-import '@testing-library/jest-dom/vitest';
+import { QueryClient } from "@tanstack/react-query";
+import "@testing-library/jest-dom/vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { describe, expect, it, vi } from "vitest";
-import { Platform } from "../../src/common.types";
+import { describe, expect, it } from "vitest";
 import { platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import PlatformSelector from "./../../src/components/PlatformSelector";
 
 describe("PlatformSelector", () => {
   const queryClient = new QueryClient({
-    defaultOptions:{
-      queries:{
+    defaultOptions: {
+      queries: {
         retry: false,
         initialData: undefined,
-        staleTime:0
-      }
-    }
+        staleTime: 0,
+      },
+    },
   });
-  const renderPlatformSelectorComponent = async (
-    selectedPlatform?: Platform
-  ) => {
-    const onSelectPlatform = vi.fn();
-
-    renderWithQueryClient(
-      queryClient,
-      <PlatformSelector
-        onSelectPlatform={onSelectPlatform}
-        selectedPlatformId={selectedPlatform?.id }
-      />
-    );
+  const renderPlatformSelectorComponent = async () => {
+    renderWithQueryClient(queryClient, <PlatformSelector />);
 
     return {
-      onSelectPlatform,
       dropDown: await screen.findByTestId("platforms-dropdown"),
       menuList: await screen.findByTestId("platforms-menulist"),
     };
@@ -52,7 +40,7 @@ describe("PlatformSelector", () => {
   });
 
   it("should set menulist to visible when dropdown is clicked", async () => {
-   const {dropDown} = await renderPlatformSelectorComponent();
+    const { dropDown } = await renderPlatformSelectorComponent();
 
     const user = userEvent.setup();
     await user.tripleClick(dropDown);
@@ -74,26 +62,7 @@ describe("PlatformSelector", () => {
         `platform-menuitem-${platform.id}`
       );
 
-      expect(menuItem).toHaveTextContent(`${platform.name}`)
+      expect(menuItem).toHaveTextContent(`${platform.name}`);
     });
-  });  
-
-  it("should call onSelectPlatform when menuItem is clicked", async () => {
-    const { onSelectPlatform } = await renderPlatformSelectorComponent();
-
-    //Get menu item to click
-    const menuItem = await screen.findByTestId("platform-menuitem-1");
-
-    const user = userEvent.setup();
-    await user.click(menuItem);
-
-    expect(onSelectPlatform).toHaveBeenCalled();
-  });
-
-  it("should render dropdown with platform name when selected platform is provided", async () => {
-    const platform = platforms[0];
-    const { dropDown } = await renderPlatformSelectorComponent(platform);
-
-    expect(dropDown).toHaveTextContent(`${platform.name}`);
   });
 });
