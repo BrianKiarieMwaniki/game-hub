@@ -19,12 +19,8 @@ describe("GameGrid", () => {
       },
     },
   });
-  const renderGameGridComponent = async () => {
-    const gameQuery: GameQuery = {
-      sortOrder: "",
-      searchText: "",
-    };
-    renderWithQueryClient(queryClient, <GameGrid gameQuery={gameQuery} />);
+  const renderGameGridComponent = async () => {  
+    renderWithQueryClient(queryClient, <GameGrid />);
 
     return {
       gameGrid: await screen.findByTestId("game-grid"),
