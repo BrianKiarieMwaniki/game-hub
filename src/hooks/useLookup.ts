@@ -1,8 +1,8 @@
 import { Identity } from "../common.types";
 
-function useLookup<T extends Identity>(args:T[], id?:number){
+function useLookup<T extends Identity>(args?:T[], id?:number){
     return {
-        name: args.find(x => x.id === id)?.name
+        name: args?.find(x => x.id === id)?.name
     }
 }
 export default useLookup;

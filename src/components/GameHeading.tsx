@@ -7,8 +7,9 @@ const GameHeading = () => {
   const { data: genres } = useGenres();
   const { data: platforms } = usePlatforms();
 
-  const selectedGenreId = useGameQuery((s) => s.gameQuery.genreId);
-  const selectedPlatformId = useGameQuery((s) => s.gameQuery.platformId);
+  const {gameQuery} = useGameQuery();  
+
+  const {genreId: selectedGenreId, platformId: selectedPlatformId} = gameQuery;
 
   const { name: genreName } = useLookup<Genre>(genres, selectedGenreId);
   const { name: platformName } = useLookup<Platform>(
