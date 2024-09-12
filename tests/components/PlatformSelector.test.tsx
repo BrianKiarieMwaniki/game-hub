@@ -72,11 +72,11 @@ describe("PlatformSelector", () => {
     });
   });
 
-  it('should call setSelectedPlatformId when menu item is clicked', async () => {
-    const handleSelectPlatformId = vi.fn();
+  it('should call setPlatformId when menu item is clicked', async () => {
+    const setPlatformIdHanlder = vi.fn();
     mockZustandSelector(useGameQuery, {
       gameQuery: {},
-      setPlatformId: handleSelectPlatformId
+      setPlatformId: setPlatformIdHanlder
     })
 
     await renderPlatformSelectorComponent();
@@ -88,7 +88,7 @@ describe("PlatformSelector", () => {
     await user.click(menuItem);
 
 
-    expect(handleSelectPlatformId).toHaveBeenCalled();
+    expect(setPlatformIdHanlder).toHaveBeenCalled();
   })
 
   it('should render drop down with selected platform name', async () => {

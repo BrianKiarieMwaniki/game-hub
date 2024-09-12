@@ -4,18 +4,23 @@ import { describe, expect, it, vi } from "vitest";
 import GenreList from "./../../src/components/GenreList";
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import { genres } from "../mocks/data";
-import {queryProviderWrapper} from "../utils/queryProviderHelper";
+
+import { queryProviderWrapper } from "../utils/queryProviderHelper";
+import { mockZustandSelector } from "../utils/zustandHelper";
+import useGameQuery from "../../src/store/store";
+import genres from "../../src/data/genres";
+
+vi.mock("./../../src/store/store", () => ({
+  default: vi.fn(),
+}));
 
 describe("GenreList", () => {
   const renderGenreListComponent = async () => {
-    const onSelectGenre = vi.fn();
-    render(<GenreList onSelectGenre={onSelectGenre}/>, {
+    render(<GenreList />, {
       wrapper: queryProviderWrapper(),
     });
 
     return {
-      onSelectGenre,
       genreList: await screen.findByTestId("genre-list"),
     };
   };
@@ -40,15 +45,20 @@ describe("GenreList", () => {
     });
   });
 
-  it("Should call onSelectGenre when list item is clicked", async () => {
-    const { onSelectGenre } = await renderGenreListComponent();
-
-    const button = await screen.findByRole("button", {
-      name: `${genres[0].name}`,
+  it("Should call setGenreId when list item is clicked", async () => {
+    const setGenreIdHandler = vi.fn();
+    mockZustandSelector(useGameQuery, {
+      gameQuery: {},
+      setGenreId: setGenreIdHandler,
     });
-    const user = userEvent.setup();
-    await user.click(button);
 
-    expect(onSelectGenre).toHaveBeenCalled();
+    await renderGenreListComponent();
+
+    const button = await screen.findAllByRole("button");
+
+    const user = userEvent.setup();
+    await user.click(button[0]);
+
+    expect(setGenreIdHandler).toHaveBeenCalled();
   });
 });
