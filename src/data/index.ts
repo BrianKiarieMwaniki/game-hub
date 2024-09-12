@@ -1,4 +1,3 @@
-import genres from "./genres";
-import platforms from "./platforms";
+export {default as genres} from "./genres";
+export {default as platforms} from "./platforms";
 
-export {genres, platforms}

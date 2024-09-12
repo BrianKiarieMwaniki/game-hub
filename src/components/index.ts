@@ -1,31 +1,14 @@
-import ColorModeSwitch from "./ColorModeSwitch";
-import CriticScore from "./CriticScore";
-import Emoji from "./Emoji";
-import GameCard from "./GameCard";
-import GameCardContainer from "./GameCardContainer";
-import GameCardSkeleton from "./GameCardSkeleton";
-import GameGrid from "./GameGrid";
-import GameHeading from "./GameHeading";
-import GenreList from "./GenreList";
-import NavBar from "./NavBar";
-import PlatformIconList from "./PlatformIconList";
-import PlatformSelector from "./PlatformSelector";
-import SearchInput from "./SearchInput";
-import SortSelector from "./SortSelector";
-
-export{
-    ColorModeSwitch, 
-    CriticScore,
-    Emoji,
-    GameCard,
-    GameCardContainer,
-    GameCardSkeleton,
-    GameGrid,
-    GameHeading,
-    GenreList,
-    NavBar,
-    PlatformIconList,
-    PlatformSelector,
-    SearchInput,
-    SortSelector
-}
+export { default as ColorModeSwitch } from "./ColorModeSwitch";
+export { default as CriticScore } from "./CriticScore";
+export { default as Emoji } from "./Emoji";
+export { default as GameCard } from "./GameCard";
+export { default as GameCardContainer } from "./GameCardContainer";
+export { default as GameCardSkeleton } from "./GameCardSkeleton";
+export { default as GameGrid } from "./GameGrid";
+export { default as GameHeading } from "./GameHeading";
+export { default as GenreList } from "./GenreList";
+export { default as NavBar } from "./NavBar";
+export { default as PlatformIconList } from "./PlatformIconList";
+export { default as PlatformSelector } from "./PlatformSelector";
+export { default as SearchInput } from "./SearchInput";
+export { default as SortSelector } from "./SortSelector";
