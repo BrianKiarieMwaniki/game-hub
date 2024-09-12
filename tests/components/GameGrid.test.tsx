@@ -1,13 +1,12 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import GameGrid from "./../../src/components/GameGrid";
-import React from "react";
-import { http, HttpResponse } from "msw";
-import { server } from "../mocks/server";
-import { GameQuery } from "../../src/common.types";
-import "@testing-library/jest-dom/vitest";
-import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import { QueryClient } from "@tanstack/react-query";
+import "@testing-library/jest-dom/vitest";
+import { screen, waitFor } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
+import React from "react";
+import { describe, expect, it } from "vitest";
+import { server } from "../mocks/server";
+import { renderWithQueryClient } from "../utils/queryProviderHelper";
+import GameGrid from "./../../src/components/GameGrid";
 
 describe("GameGrid", () => {
   const queryClient = new QueryClient({

@@ -1,6 +1,4 @@
-import useGames from "./useGames";
-import useGenres from "./useGenres";
-import usePlatforms from "./usePlatforms";
-import useLookup from "./useLookup";
-
-export { useGames, useGenres, usePlatforms , useLookup};
+export { default as useGames } from "./useGames";
+export { default as useGenres } from "./useGenres";
+export { default as usePlatforms } from "./usePlatforms";
+export { default as useLookup } from "./useLookup";

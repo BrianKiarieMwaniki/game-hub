@@ -7,7 +7,7 @@ import { genres, platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import GameHeading from "./../../src/components/GameHeading";
 import useGameQuery from "./../../src/store/store";
-import { GameQuery } from "../../src/common.types";
+import { mockZustandSelector } from "../utils/zustandHelper";
 
 vi.mock("./../../src/store/store", () => ({
   default: vi.fn(),
@@ -34,60 +34,64 @@ describe("GameHeading", () => {
   };
 
   it("should render just games when no platform and genre are specified", async () => {
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      gameQuery: {} as GameQuery,
-    });
     const { heading } = await renderGameHeading();
 
     expect(heading).toHaveTextContent("Games");
   });
 
   it("should render heading with genre name when genre is specified", async () => {
+    // Arrange
     const genre = genres[1];
+    const expectedHeading = `${genre.name} Games`;
 
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    mockZustandSelector(useGameQuery, {
       gameQuery: {
         genreId: genre.id,
       },
     });
 
+    // Act
     const { heading } = await renderGameHeading();
 
-    const expectedHeading = `${genre.name} Games`;
-
+    // Assert
     expect(heading).toHaveTextContent(expectedHeading);
   });
 
   it("should render heading with platform name when platform is specified", async () => {
+    // Arrange
     const platform = platforms[0];
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    const expectedHeading = `${platform.name} Games`;
+
+    mockZustandSelector(useGameQuery, {
       gameQuery: {
         platformId: platform.id,
       },
     });
 
+    // Act
     const { heading } = await renderGameHeading();
 
-    const expectedHeading = `${platform.name} Games`;
-
+    // Assert
     expect(heading).toHaveTextContent(expectedHeading);
   });
 
   it("should render heading with both platform name and genre name when both platform and genre are specified", async () => {
+    // Arrange
     const platform = platforms[0];
     const genre = genres[0];
+    const expectedHeading = `${platform.name} ${genre.name} Games`;
 
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+    mockZustandSelector(useGameQuery, {
       gameQuery: {
         genreId: genre.id,
         platformId: platform.id,
       },
     });
 
+    // Act
     const { heading } = await renderGameHeading();
 
-    const expectedHeading = `${platform.name} ${genre.name} Games`;
-
+    // Assert
     expect(heading).toHaveTextContent(expectedHeading);
   });
 });

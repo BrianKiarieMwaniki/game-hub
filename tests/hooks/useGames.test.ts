@@ -1,23 +1,19 @@
 import { renderHook, waitFor } from "@testing-library/react";
+import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
-import useGames from "./../../src/hooks/useGames";
 import { games } from "../mocks/data";
 import { server } from "../mocks/server";
-import { http, HttpResponse } from "msw";
-import { GameQuery } from "../../src/common.types";
-import {queryProviderWrapper} from './../utils/queryProviderHelper';
+import useGames from "./../../src/hooks/useGames";
+import { queryProviderWrapper } from "./../utils/queryProviderHelper";
 
 describe("useGames", () => {
-
-  const renderuseGamesHook = () =>
-  {
-    const gameQuery: GameQuery = {sortOrder: "", searchText:""};
-    const {result } = renderHook(() => useGames(gameQuery), {
-      wrapper: queryProviderWrapper()
+  const renderuseGamesHook = () => {
+    const { result } = renderHook(() => useGames(), {
+      wrapper: queryProviderWrapper(),
     });
 
-    return {result};
-  }
+    return { result };
+  };
   it("should render a list of games", async () => {
     const { result } = renderuseGamesHook();
 
@@ -29,7 +25,7 @@ describe("useGames", () => {
     const gamesResult = result.current.data;
     expect(gamesResult).toBeDefined();
     expect(gamesResult!.pages).not.toBeUndefined();
-    expect(gamesResult?.pages.flatMap(page => page)).toEqual(games);
+    expect(gamesResult?.pages.flatMap((page) => page)).toEqual(games);
   });
 
   it("should return error when there is an error", async () => {

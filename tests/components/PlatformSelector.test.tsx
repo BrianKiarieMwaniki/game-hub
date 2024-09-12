@@ -3,10 +3,16 @@ import "@testing-library/jest-dom/vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import PlatformSelector from "./../../src/components/PlatformSelector";
+import useGameQuery from "../../src/store/store";
+import { mockZustandSelector } from "../utils/zustandHelper";
+
+vi.mock("./../../src/store/store", () => ({
+  default: vi.fn(),
+}));
 
 describe("PlatformSelector", () => {
   const queryClient = new QueryClient({
@@ -65,4 +71,36 @@ describe("PlatformSelector", () => {
       expect(menuItem).toHaveTextContent(`${platform.name}`);
     });
   });
+
+  it('should call setPlatformId when menu item is clicked', async () => {
+    const setPlatformIdHanlder = vi.fn();
+    mockZustandSelector(useGameQuery, {
+      gameQuery: {},
+      setPlatformId: setPlatformIdHanlder
+    })
+
+    await renderPlatformSelectorComponent();
+
+    //Get menu item to click
+    const menuItem = await screen.findByTestId("platform-menuitem-1");
+
+    const user = userEvent.setup();
+    await user.click(menuItem);
+
+
+    expect(setPlatformIdHanlder).toHaveBeenCalled();
+  })
+
+  it('should render drop down with selected platform name', async () => {
+    const platform = platforms[0];
+    mockZustandSelector(useGameQuery, {
+      gameQuery:{
+        platformId: platform.id
+      }
+    });
+
+    const {dropDown} = await renderPlatformSelectorComponent();
+
+    expect(dropDown).toHaveTextContent(platform.name);
+  })
 });
