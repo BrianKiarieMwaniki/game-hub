@@ -3,10 +3,15 @@ import "@testing-library/jest-dom/vitest";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import PlatformSelector from "./../../src/components/PlatformSelector";
+import useGameQuery from "../../src/store/store";
+
+vi.mock("./../../src/store/store", () => ({
+  default: vi.fn(),
+}));
 
 describe("PlatformSelector", () => {
   const queryClient = new QueryClient({
@@ -65,4 +70,22 @@ describe("PlatformSelector", () => {
       expect(menuItem).toHaveTextContent(`${platform.name}`);
     });
   });
+
+  it('should call setSelectedPlatformId when menu item is clicked', async () => {
+    const handleSelectPlatformId = vi.fn();
+    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+      setPlatformId: handleSelectPlatformId,
+    });
+
+    await renderPlatformSelectorComponent();
+
+    //Get menu item to click
+    const menuItem = await screen.findByTestId("platform-menuitem-1");
+
+    const user = userEvent.setup();
+    await user.click(menuItem);
+
+
+    expect(handleSelectPlatformId).toHaveBeenCalled();
+  })
 });

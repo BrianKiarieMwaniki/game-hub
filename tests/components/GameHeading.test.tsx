@@ -34,9 +34,6 @@ describe("GameHeading", () => {
   };
 
   it("should render just games when no platform and genre are specified", async () => {
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      gameQuery: {} as GameQuery,
-    });
     const { heading } = await renderGameHeading();
 
     expect(heading).toHaveTextContent("Games");
@@ -45,11 +42,16 @@ describe("GameHeading", () => {
   it("should render heading with genre name when genre is specified", async () => {
     const genre = genres[1];
 
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      gameQuery: {
-        genreId: genre.id,
-      },
-    });
+    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+      (selector) => {
+        const state = {
+          gameQuery: {
+            genreId: genre.id,
+          },
+        };
+        return selector(state);
+      }
+    );
 
     const { heading } = await renderGameHeading();
 
@@ -60,11 +62,16 @@ describe("GameHeading", () => {
 
   it("should render heading with platform name when platform is specified", async () => {
     const platform = platforms[0];
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      gameQuery: {
-        platformId: platform.id,
-      },
-    });
+    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+      (selector) => {
+        const state = {
+          gameQuery: {
+            platformId: platform.id,
+          },
+        };
+        return selector(state);
+      }
+    );
 
     const { heading } = await renderGameHeading();
 
@@ -77,12 +84,18 @@ describe("GameHeading", () => {
     const platform = platforms[0];
     const genre = genres[0];
 
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      gameQuery: {
-        genreId: genre.id,
-        platformId: platform.id,
-      },
-    });
+    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+      (selector) => {
+        const state = {
+          gameQuery: {
+            genreId: genre.id,
+            platformId: platform.id,
+          },
+        };
+
+        return selector(state);
+      }
+    );
 
     const { heading } = await renderGameHeading();
 
