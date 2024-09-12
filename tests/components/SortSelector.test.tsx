@@ -7,7 +7,7 @@ import SortSelector from "./../../src/components/SortSelector";
 import { mockZustandSelector } from "../utils/zustandHelper";
 import useGameQuery from "../../src/store/store";
 
-vi.mock("../../src/store/store", () => ({default: vi.fn()}));
+vi.mock("../../src/store/store", () => ({ default: vi.fn() }));
 
 describe("SortSelector", () => {
   const renderSortSelectorComponent = () => {
@@ -43,20 +43,19 @@ describe("SortSelector", () => {
   });
 
   it("should call setSortOrder when menu item is clicked", async () => {
-     const setSortOrderHandler = vi.fn();
-     mockZustandSelector(useGameQuery, {
-      gameQuery:{},
-      setSortOrder: setSortOrderHandler
-     })
+    const setSortOrderHandler = vi.fn();
+    mockZustandSelector(useGameQuery, {
+      gameQuery: {},
+      setSortOrder: setSortOrderHandler,
+    });
 
-     renderSortSelectorComponent();
+    renderSortSelectorComponent();
 
-     const sortMenuItems = await screen.findAllByTestId('sort-menu-item');
+    const sortMenuItems = await screen.findAllByTestId("sort-menu-item");
 
-     const user = userEvent.setup();
-     await user.click(sortMenuItems[0])
+    const user = userEvent.setup();
+    await user.click(sortMenuItems[0]);
 
-     expect(setSortOrderHandler).toHaveBeenCalled();
-
+    expect(setSortOrderHandler).toHaveBeenCalled();
   });
 });
