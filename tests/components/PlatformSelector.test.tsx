@@ -8,6 +8,7 @@ import { platforms } from "../../src/data";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import PlatformSelector from "./../../src/components/PlatformSelector";
 import useGameQuery from "../../src/store/store";
+import { mockZustandSelector } from "../utils/zustandHelper";
 
 vi.mock("./../../src/store/store", () => ({
   default: vi.fn(),
@@ -73,9 +74,10 @@ describe("PlatformSelector", () => {
 
   it('should call setSelectedPlatformId when menu item is clicked', async () => {
     const handleSelectPlatformId = vi.fn();
-    (useGameQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      setPlatformId: handleSelectPlatformId,
-    });
+    mockZustandSelector(useGameQuery, {
+      gameQuery: {},
+      setPlatformId: handleSelectPlatformId
+    })
 
     await renderPlatformSelectorComponent();
 
@@ -87,5 +89,18 @@ describe("PlatformSelector", () => {
 
 
     expect(handleSelectPlatformId).toHaveBeenCalled();
+  })
+
+  it('should render drop down with selected platform name', async () => {
+    const platform = platforms[0];
+    mockZustandSelector(useGameQuery, {
+      gameQuery:{
+        platformId: platform.id
+      }
+    });
+
+    const {dropDown} = await renderPlatformSelectorComponent();
+
+    expect(dropDown).toHaveTextContent(platform.name);
   })
 });
