@@ -7,5 +7,5 @@ export interface Game extends Identity {
   metacritic: number;
   parent_platforms: { platform: Platform }[];
   rating_top: number;
-  description_raw?: string;
+  description_raw: string;
 }

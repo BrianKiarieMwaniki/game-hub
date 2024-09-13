@@ -33,6 +33,7 @@ export const games: Game[] = [
       },
     ],
     rating_top: 4,
+    description_raw:'Fantastic game'
   },
   {
     id: 1,
@@ -64,6 +65,7 @@ export const games: Game[] = [
       },
     ],
     rating_top: 5,
+    description_raw: 'Very good game'
   },
   {
     id: 2,
@@ -95,6 +97,7 @@ export const games: Game[] = [
       },
     ],
     rating_top: 4,
+    description_raw: 'One of the best games ever'
   },
 ];
 
