@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import { Game } from "../common.types";
-import GameSerive from "../services/gameServices";
+import GameService from "../services/gameServices";
 import useGameQuery from "../store/store";
+import { Game } from "../entities/Game";
 
 const useGames = () => {
   const gameQuery = useGameQuery((s) => s.gameQuery);
@@ -16,7 +16,7 @@ const useGames = () => {
   } = useInfiniteQuery<Game[], Error>({
     queryKey: ["games", gameQuery],
     queryFn: async ({ pageParam = 1 }) => {
-      const gameService = new GameSerive("/games", {
+      const gameService = new GameService("/games", {
         page: pageParam,
         ...gameQuery,
       });

@@ -1,10 +1,11 @@
-import { Game, Genre, Platform } from "../../src/common.types";
+import {Game, Genre, Platform} from './../../src/entities'
 
 const placeHolderImageUrl = "https://via.placeholder.com/300x200";
 
 export const games: Game[] = [
   {
     id: 0,
+    slug:'grand-theft-auto-v',
     name: "Grand Theft Auto V",
     background_image: "https://via.placeholder.com/300x200",
     metacritic: 92,
@@ -32,10 +33,12 @@ export const games: Game[] = [
       },
     ],
     rating_top: 4,
+    description_raw:'Fantastic game'
   },
   {
     id: 1,
     name: "The Witcher 3: Wild Hunt",
+    slug:'witcher-3-wild-hunt',
     background_image: "https://via.placeholder.com/300x200",
     metacritic: 92,
     parent_platforms: [
@@ -62,10 +65,12 @@ export const games: Game[] = [
       },
     ],
     rating_top: 5,
+    description_raw: 'Very good game'
   },
   {
     id: 2,
     name: "Portal 2",
+    slug:'portal-2',
     background_image: "https://via.placeholder.com/300x200",
     metacritic: 95,
     parent_platforms: [
@@ -92,6 +97,7 @@ export const games: Game[] = [
       },
     ],
     rating_top: 4,
+    description_raw: 'One of the best games ever'
   },
 ];
 
