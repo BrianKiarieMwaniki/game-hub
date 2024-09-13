@@ -1,17 +1,23 @@
 import { Card, CardBody, Heading, HStack, Image } from "@chakra-ui/react";
-import { Game } from "../common.types";
-import PlatformIconList from "./PlatformIconList";
-import CriticScore from "./CriticScore";
+import { useNavigate } from "react-router-dom";
+import { Game } from "../entities/Game";
 import getCroppedImageUrl from "./../services/image-url";
+import CriticScore from "./CriticScore";
 import Emoji from "./Emoji";
+import PlatformIconList from "./PlatformIconList";
 
 interface Props {
   game: Game;
 }
 
 const GameCard = ({ game }: Props) => {
+  const navigate = useNavigate();
+
   return (
-    <Card data-testid="game-card">
+    <Card
+      onClick={() => navigate(`/games/${game.slug}`)}
+      data-testid="game-card"
+    >
       <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
         <HStack justifyContent="space-between" marginBottom={3}>

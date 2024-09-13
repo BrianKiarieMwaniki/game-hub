@@ -7,7 +7,7 @@ import useGames from "./../../src/hooks/useGames";
 import { queryProviderWrapper } from "./../utils/queryProviderHelper";
 
 describe("useGames", () => {
-  const renderuseGamesHook = () => {
+  const renderUseGamesHook = () => {
     const { result } = renderHook(() => useGames(), {
       wrapper: queryProviderWrapper(),
     });
@@ -15,7 +15,7 @@ describe("useGames", () => {
     return { result };
   };
   it("should render a list of games", async () => {
-    const { result } = renderuseGamesHook();
+    const { result } = renderUseGamesHook();
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
@@ -33,7 +33,7 @@ describe("useGames", () => {
       http.get("https://api.rawg.io/api/games", () => HttpResponse.error())
     );
 
-    const { result } = renderuseGamesHook();
+    const { result } = renderUseGamesHook();
 
     // Assert that the initial state is loading
     expect(result.current.isLoading).toBe(true);
