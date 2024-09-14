@@ -5,7 +5,7 @@ import { Game } from "../entities/Game";
 
 const useGame = (gameSlug?: string) =>
   useQuery<Game, Error>({
-    queryKey: [`game-${gameSlug}`],
+    queryKey: ["games", gameSlug],
     queryFn: async () => {
       const gameService = new GameService("/games", {} as GameQuery);
       if (!gameSlug) throw new Error("Game must have a valid id");

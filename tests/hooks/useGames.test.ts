@@ -14,7 +14,8 @@ describe("useGames", () => {
 
     return { result };
   };
-  it("should render a list of games", async () => {
+
+  it("should return a list of games", async () => {
     const { result } = renderUseGamesHook();
 
     // Assert that the initial state is loading

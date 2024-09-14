@@ -1,3 +1,4 @@
+export { default as useTrailers } from "./useTrailers";
 export { default as useGame } from "./useGame";
 export { default as useGames } from "./useGames";
 export { default as useGenres } from "./useGenres";
