@@ -1,21 +1,25 @@
 import { http, HttpResponse } from "msw";
-import { games, genres, platforms } from "./data";
-import { Game } from "../../src/entities";
+import {
+  mockGamesList,
+  mockGenreList,
+  mockPlatformsList,
+  mockTrailerList,
+} from "./data";
 
 export const baseUrl = "https://api.rawg.io/api";
 
 export const handlers = [
   http.get(`${baseUrl}/games`, () => {
     return HttpResponse.json({
-      count: games.length,
-      results: games,
+      count: mockGamesList.length,
+      results: mockGamesList,
     });
   }),
 
   http.get(`${baseUrl}/games/:slug`, ({ params }) => {
     const { slug } = params;
 
-    const game = games.find((game) => game.slug === slug);
+    const game = mockGamesList.find((game) => game.slug === slug);
 
     if (!game) {
       return new HttpResponse(null, {
@@ -29,15 +33,22 @@ export const handlers = [
 
   http.get(`${baseUrl}/genres`, () => {
     return HttpResponse.json({
-      count: genres.length,
-      results: genres,
+      count: mockGenreList.length,
+      results: mockGenreList,
     });
   }),
 
   http.get(`${baseUrl}/platforms/lists/parents`, () => {
     return HttpResponse.json({
-      count: platforms.length,
-      results: platforms,
+      count: mockPlatformsList.length,
+      results: mockPlatformsList,
+    });
+  }),
+
+  http.get(`${baseUrl}/games/1/movies`, () => {
+    return HttpResponse.json({
+      count: mockTrailerList.length,
+      results: mockTrailerList,
     });
   }),
 ];

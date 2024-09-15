@@ -1,8 +1,8 @@
-import { Game, Genre, Platform } from "./../../src/entities";
+import { Game, Genre, Platform, Trailer } from "./../../src/entities";
 
 const placeHolderImageUrl = "https://via.placeholder.com/300x200";
 
-export const genres: Genre[] = [
+export const mockGenreList: Genre[] = [
   {
     id: 0,
     name: "Action",
@@ -33,7 +33,7 @@ export const genres: Genre[] = [
   },
 ];
 
-export const games: Game[] = [
+export const mockGamesList: Game[] = [
   {
     id: 0,
     slug: "grand-theft-auto-v",
@@ -65,7 +65,7 @@ export const games: Game[] = [
     ],
     rating_top: 4,
     description_raw: "Fantastic game",
-    genres: [genres[0], genres[2]],
+    genres: [mockGenreList[0], mockGenreList[2]],
     publishers: [{ id: 11, name: "ROCKSTAR GAMES" }],
   },
   {
@@ -99,7 +99,7 @@ export const games: Game[] = [
     ],
     rating_top: 5,
     description_raw: "Very good game",
-    genres: [genres[0], genres[1]],
+    genres: [mockGenreList[0], mockGenreList[1]],
     publishers: [{ id: 1, name: "CD PROJEKT RED" }],
   },
   {
@@ -133,7 +133,7 @@ export const games: Game[] = [
     ],
     rating_top: 4,
     description_raw: "One of the best games ever",
-    genres: [genres[0], genres[1]],
+    genres: [mockGenreList[0], mockGenreList[1]],
     publishers: [
       { id: 4, name: "Electronic Arts" },
       { id: 5, name: "Valve" },
@@ -141,7 +141,7 @@ export const games: Game[] = [
   },
 ];
 
-export const platforms: Platform[] = [
+export const mockPlatformsList: Platform[] = [
   {
     id: 0,
     name: "Nintendo",
@@ -161,5 +161,35 @@ export const platforms: Platform[] = [
     id: 3,
     name: "Play Station",
     slug: "play station",
+  },
+];
+
+export const mockTrailerList: Trailer[] = [
+  {
+    id: 1,
+    name: "Epic Game Trailer",
+    preview: "https://example.com/preview-image1.jpg",
+    data: {
+      480: "https://example.com/trailer1-480p.mp4",
+      max: "https://example.com/trailer1-max.mp4",
+    },
+  },
+  {
+    id: 2,
+    name: "Adventure Quest",
+    preview: "https://example.com/preview-image2.jpg",
+    data: {
+      480: "https://example.com/trailer2-480p.mp4",
+      max: "https://example.com/trailer2-max.mp4",
+    },
+  },
+  {
+    id: 3,
+    name: "Space Odyssey",
+    preview: "https://example.com/preview-image3.jpg",
+    data: {
+      480: "https://example.com/trailer3-480p.mp4",
+      max: "https://example.com/trailer3-max.mp4",
+    },
   },
 ];

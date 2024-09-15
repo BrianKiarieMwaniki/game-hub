@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
-import { games } from "../mocks/data";
+import { mockGamesList } from "../mocks/data";
 import { server } from "../mocks/server";
 import useGames from "./../../src/hooks/useGames";
 import { queryProviderWrapper } from "./../utils/queryProviderHelper";
@@ -26,7 +26,7 @@ describe("useGames", () => {
     const gamesResult = result.current.data;
     expect(gamesResult).toBeDefined();
     expect(gamesResult!.pages).not.toBeUndefined();
-    expect(gamesResult?.pages.flatMap((page) => page)).toEqual(games);
+    expect(gamesResult?.pages.flatMap((page) => page)).toEqual(mockGamesList);
   });
 
   it("should return error when there is an error", async () => {
