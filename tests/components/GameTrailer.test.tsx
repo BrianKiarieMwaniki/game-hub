@@ -1,5 +1,4 @@
-import { QueryClient } from "@tanstack/react-query";
-import '@testing-library/jest-dom/vitest';
+import "@testing-library/jest-dom/vitest";
 import { screen } from "@testing-library/react";
 import React from "react";
 import { describe, expect, it } from "vitest";
@@ -8,18 +7,8 @@ import { simulateEmptyReturn, simulateError } from "../utils/serverUtils";
 import GameTrailer from "./../../src/components/GameTrailer";
 
 describe("GameTrailer", () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        initialData: undefined,
-        staleTime: 0,
-      },
-    },
-  });
-
   const renderComponent = () => {
-    renderWithQueryClient(queryClient, <GameTrailer gameId={1} />);
+    renderWithQueryClient(<GameTrailer gameId={1} />);
   };
 
   it("should render a trailer", async () => {

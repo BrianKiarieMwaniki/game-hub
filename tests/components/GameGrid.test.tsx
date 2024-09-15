@@ -1,32 +1,19 @@
-import { QueryClient } from "@tanstack/react-query";
 import "@testing-library/jest-dom/vitest";
 import {
-  findByTestId,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
+  screen
 } from "@testing-library/react";
 import { delay, http, HttpResponse } from "msw";
 import React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { server } from "../mocks/server";
 import { renderWithQueryClient } from "../utils/queryProviderHelper";
 import GameGrid from "./../../src/components/GameGrid";
-import { MemoryRouter } from "react-router-dom";
 
 describe("GameGrid", () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        initialData: undefined,
-        staleTime: 0,
-      },
-    },
-  });
+  
   const renderGameGridComponent = () => {
-    renderWithQueryClient(
-      queryClient,
+    renderWithQueryClient(      
       <MemoryRouter>
         <GameGrid />
       </MemoryRouter>
