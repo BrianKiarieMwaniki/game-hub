@@ -15,17 +15,8 @@ vi.mock("./../../src/store/store", () => ({
 }));
 
 describe("PlatformSelector", () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        initialData: undefined,
-        staleTime: 0,
-      },
-    },
-  });
   const renderPlatformSelectorComponent = async () => {
-    renderWithQueryClient(queryClient, <PlatformSelector />);
+    renderWithQueryClient(<PlatformSelector />);
 
     return {
       dropDown: await screen.findByTestId("platforms-dropdown"),
@@ -72,12 +63,12 @@ describe("PlatformSelector", () => {
     });
   });
 
-  it('should call setPlatformId when menu item is clicked', async () => {
+  it("should call setPlatformId when menu item is clicked", async () => {
     const setPlatformIdHanlder = vi.fn();
     mockZustandSelector(useGameQuery, {
       gameQuery: {},
-      setPlatformId: setPlatformIdHanlder
-    })
+      setPlatformId: setPlatformIdHanlder,
+    });
 
     await renderPlatformSelectorComponent();
 
@@ -87,20 +78,19 @@ describe("PlatformSelector", () => {
     const user = userEvent.setup();
     await user.click(menuItem);
 
-
     expect(setPlatformIdHanlder).toHaveBeenCalled();
-  })
+  });
 
-  it('should render drop down with selected platform name', async () => {
+  it("should render drop down with selected platform name", async () => {
     const platform = platforms[0];
     mockZustandSelector(useGameQuery, {
-      gameQuery:{
-        platformId: platform.id
-      }
+      gameQuery: {
+        platformId: platform.id,
+      },
     });
 
-    const {dropDown} = await renderPlatformSelectorComponent();
+    const { dropDown } = await renderPlatformSelectorComponent();
 
     expect(dropDown).toHaveTextContent(platform.name);
-  })
+  });
 });

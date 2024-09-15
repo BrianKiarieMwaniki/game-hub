@@ -17,16 +17,26 @@ export const queryProviderWrapper = () => {
 };
 
 export const renderWithQueryClient = (
-  client: QueryClient,
-  ui: React.ReactElement
+  ui: React.ReactElement,
+  client?: QueryClient
 ) => {
+   const queryClient = new QueryClient({
+     defaultOptions: {
+       queries: {
+         retry: false,
+         initialData: undefined,
+         staleTime: 0,
+       },
+     },
+   });
+
   const { rerender, ...result } = render(
-    <QueryClientProvider client={client}>{ui}</QueryClientProvider>
+    <QueryClientProvider client={client ? client : queryClient}>{ui}</QueryClientProvider>
   );
   return {
     ...result,
     rerender: (rerenderUi: React.ReactElement) => {
-      <QueryClientProvider client={client}>{rerenderUi}</QueryClientProvider>;
+      <QueryClientProvider client={client ? client: queryClient}>{rerenderUi}</QueryClientProvider>;
     },
   };
 };
