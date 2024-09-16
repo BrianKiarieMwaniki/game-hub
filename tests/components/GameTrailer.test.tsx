@@ -20,7 +20,7 @@ describe("GameTrailer", () => {
   });
 
   it("should render no element when data is empty", async () => {
-    simulateEmptyReturn("https://api.rawg.io/api/games/1/movies");
+    simulateEmptyReturn("/games/1/movies");
 
     renderComponent();
 
@@ -30,7 +30,7 @@ describe("GameTrailer", () => {
   });
 
   it("should throw an error when error is found", () => {
-    simulateError("https://api.rawg.io/api/games/1/movies");
+    simulateError("/games/1/movies");
 
     expect(() => renderComponent()).toThrowError();
   });

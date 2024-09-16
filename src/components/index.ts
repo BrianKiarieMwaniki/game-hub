@@ -1,3 +1,4 @@
+export { default as GameScreenshots } from "./GameScreenshots";
 export { default as ColorModeSwitch } from "./ColorModeSwitch";
 export { default as CriticScore } from "./CriticScore";
 export { default as Emoji } from "./Emoji";
