@@ -20,8 +20,8 @@ describe("useGameScreenshots", () => {
   it("should return a list of screenshots", async () => {
     const {result} = await renderUseGameScreenshotsHook();
 
-    expect(result.current.data?.count).toBeGreaterThan(0);
-    expect(result.current.data?.results).toBeDefined();
+    expect(result.current.data).toBeDefined();
+    expect(result.current.data?.length).toBeGreaterThan(0);
   });
 
   it("should return an error if there is one", async () => {

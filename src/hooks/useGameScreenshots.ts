@@ -9,7 +9,10 @@ const useGameScreenshots = (gameId: number) => {
 
   return useQuery({
     queryKey: ["game_screenshots", gameId],
-    queryFn: apiClient.getAll,
+    queryFn: async() => {
+      const {results} = await apiClient.getAll();
+      return results;
+    },
   });
 };
 
