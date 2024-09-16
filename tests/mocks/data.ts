@@ -1,4 +1,4 @@
-import { Game, Genre, Platform, Trailer } from "./../../src/entities";
+import { Game, GameScreenshot, Genre, Platform, Trailer } from "./../../src/entities";
 
 const placeHolderImageUrl = "https://via.placeholder.com/300x200";
 
@@ -191,5 +191,29 @@ export const mockTrailerList: Trailer[] = [
       480: "https://example.com/trailer3-480p.mp4",
       max: "https://example.com/trailer3-max.mp4",
     },
+  },
+];
+
+export const gameScreenshots: GameScreenshot[] = [
+  {
+    id: 1,
+    image: "https://example.com/screenshot1.jpg",
+    hidden: false,
+    width: 1920,
+    height: 1080,
+  },
+  {
+    id: 2,
+    image: "https://example.com/screenshot2.jpg",
+    hidden: true,
+    width: 1280,
+    height: 720,
+  },
+  {
+    id: 3,
+    image: "https://example.com/screenshot3.jpg",
+    hidden: false,
+    width: 1366,
+    height: 768,
   },
 ];

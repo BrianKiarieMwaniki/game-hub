@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import {
+  gameScreenshots,
   mockGamesList,
   mockGenreList,
   mockPlatformsList,
@@ -51,4 +52,11 @@ export const handlers = [
       results: mockTrailerList,
     });
   }),
+
+  http.get(`${baseUrl}/games/1/screenshots`, () =>
+    HttpResponse.json({
+      count: gameScreenshots.length,
+      results: gameScreenshots,
+    })
+  ),
 ];
