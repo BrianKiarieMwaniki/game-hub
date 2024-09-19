@@ -7,12 +7,12 @@ interface Props {
 const GameScreenshots = ({ gameId }: Props) => {
   const { data: screenshots, isLoading, error } = useGameScreenshots(gameId);
 
-  if (isLoading) return <Spinner role="spinner"/>;
+  if (isLoading) return <Spinner role="spinner" />;
 
   if (error) return null;
 
   return (
-    <SimpleGrid columns={{ sm: 1, md: 2 }}>
+    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
       {screenshots?.map((screenshot) => (
         <Image key={screenshot.id} src={screenshot.image} />
       ))}
