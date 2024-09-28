@@ -96,5 +96,8 @@ Testing includes the following:
 - **Home Page:**
   ![Home Page](screenshots/game-hub-home-page.png)
 
+- **Game View:**
+  ![Game View](screenshots/game-hub-game-view.png)
+
 - **Test Coverage:**
    ![Test Coverage](screenshots/game-hub-test-coverage.png)
